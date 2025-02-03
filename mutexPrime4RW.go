@@ -15,10 +15,11 @@ func (cache *Cache) Get(i int) int {
 
 	cache.mu.RLock()
 	v, ok := cache.m[i]
+	cache.mu.RUnlock()
 	if ok {
 		return v
 	}
-	cache.mu.RUnlock()
+
 	// получаем значение для указанного ключа
 	cache.mu.Lock()
 	defer cache.mu.Unlock()
